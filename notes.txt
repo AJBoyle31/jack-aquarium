@@ -1,0 +1,66 @@
+To do:
+    - Convert XML to JSON
+    - Get fish to display
+    - move over method for identifing objects from other phaser example
+    - test fish animations
+    - have fish "swim" back and forth
+    - when clicked have fish "jump" or swim away
+    - add button to "feed" fish
+    - have bubbles come from fishes mouth
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ //find objects in a Tiled layer that contain a property called 'type' equal to a certain value
+  findObjectsByType: function(type, map, layer){
+      var result = [];
+      this.map.objects[layer].forEach(function(element){
+        if(element.properties === undefined){}
+        else if (element.properties.type == type){
+          element.y -= 16;
+          result.push(element);
+        }
+      });
+      return result;
+  },
+  
+  
+  
+  //create a sprite from an object
+  createFromTiledObject: function(element, group){
+      var sprite = group.create(element.x, element.y, element.properties.sprite);
+  },
+  
+  
+  createEnemies: function(){
+      this.enemies = this.game.add.group();
+      this.enemies.enableBody = true;
+        
+      var result = this.findObjectsByType('enemy', this.map, 'objectsLayer');
+      for (var i = 0; i < result.length; i++){
+        var baddie = new Baddie(this.game, result[i].x, result[i].y);
+        this.enemies.add(baddie);
+      }
+    
+  },
+  
+  createStars: function(){
+    this.stars = this.game.add.group();
+    this.stars.enableBody = true;
+    
+    var result = this.findObjectsByType('star', this.map, 'objectsLayer');
+    for (var i = 0; i < result.length; i++){
+      var star = new Star(this.game, result[i].x, result[i].y);
+      this.stars.add(star);
+    }
+    
+    
+  },
